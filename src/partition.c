@@ -33,22 +33,22 @@ partition(int nodenum, pNode splitnode, double *sumrisk, int n1, int n2,
     int n;
     int min_node_size = minsize;
     FILE* fptr;
-    
+
     me = splitnode;
     n = n2 - n1;                /* total number of observations */
     me->id = nodenum;
-    
+
 //#ifdef DEBUG
-    
+
     //fptr=fopen("C:\\Users\\vikasr\\Documents\\debug_text.txt","w");
     //fprintf(fptr,"test print\n");
     //fclose(fptr);
-    R_FlushConsole();
+    //R_FlushConsole();
     //Rprintf("test print\n");
     //R_ShowMessage("R_show_message\n");
-    
+
 //#endif
-    
+
     if (nodenum > 1) {
         twt = 0;
         ttr = 0;
@@ -66,11 +66,11 @@ partition(int nodenum, pNode splitnode, double *sumrisk, int n1, int n2,
 	    }
 	    if (split_Rule == 1) {
 	        // tot
-	        (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean, 
+	        (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean,
           &(me->risk), ct.wtemp, ct.trtemp, ct.max_y, ct.propensity);
 	    } else if (split_Rule == 2) {
 	        // ct
-	        (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean, 
+	        (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean,
           &(me->risk), ct.wtemp, ct.trtemp, ct.max_y, alpha, train_to_est_ratio);
 	    } else if (split_Rule == 3) {
 	        // fit
@@ -78,7 +78,7 @@ partition(int nodenum, pNode splitnode, double *sumrisk, int n1, int n2,
           &(me->risk), ct.wtemp, ct.trtemp, ct.max_y, alpha, train_to_est_ratio);
 	    } else if (split_Rule == 4) {
 	        //tstats
-	        (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean, 
+	        (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean,
           &(me->risk), ct.wtemp, ct.trtemp, ct.max_y, alpha, train_to_est_ratio);
 	    } else if (split_Rule == 5) {
 	        // totD
@@ -86,31 +86,31 @@ partition(int nodenum, pNode splitnode, double *sumrisk, int n1, int n2,
           &(me->risk), ct.wtemp, ct.trtemp, ct.max_y, ct.propensity);
 	    } else if (split_Rule == 6) {
 	        // CTD
-	        (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean, 
+	        (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean,
           &(me->risk), ct.wtemp, ct.trtemp, ct.max_y, alpha, train_to_est_ratio);
 	    } else if (split_Rule == 7) {
 	        //fitD
-	        (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean, 
+	        (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean,
           &(me->risk), ct.wtemp, ct.trtemp, ct.max_y, alpha, train_to_est_ratio);
 	    } else if (split_Rule == 8) {
 	        //tstatsD
-	        (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean, 
+	        (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean,
           &(me->risk), ct.wtemp, ct.trtemp, ct.max_y, alpha, train_to_est_ratio);
 	    } else if (split_Rule == 9) {
 	        // user (temporarily set as CT)
-	        (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean, 
+	        (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean,
           &(me->risk), ct.wtemp, ct.trtemp, ct.max_y, alpha, train_to_est_ratio);
 	    } else if (split_Rule == 10) {
 	        // userD (temporarily set as CTD)
-	        (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean, 
+	        (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean,
           &(me->risk), ct.wtemp, ct.trtemp, ct.max_y, alpha, train_to_est_ratio);
 	    }else if (split_Rule == 11) {
 	      // policy (temporarily set as CTD)
-	      (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean, 
+	      (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean,
         &(me->risk), ct.wtemp, ct.trtemp, ct.max_y, alpha, train_to_est_ratio);
 	    }else if (split_Rule == 12) {
 	      // policyD (temporarily set as CTD)
-	      (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean, 
+	      (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean,
         &(me->risk), ct.wtemp, ct.trtemp, ct.max_y, alpha, train_to_est_ratio);
 	    }
 
@@ -121,12 +121,12 @@ partition(int nodenum, pNode splitnode, double *sumrisk, int n1, int n2,
 	    if (tempcp > me->complexity)
 	      tempcp = me->complexity;
     } else
-	    tempcp = me->risk; 
+	    tempcp = me->risk;
 
     /*
      * Can I quit now ?
      */
-  
+
     if (me->num_obs < ct.min_split || tempcp <= ct.alpha || nodenum > ct.maxnode) {
         me->complexity = ct.alpha;
   	    *sumrisk = me->risk;
@@ -144,9 +144,9 @@ partition(int nodenum, pNode splitnode, double *sumrisk, int n1, int n2,
     /*
      * Guess I have to do the split
      */
-    
+
     bsplit(me, n1, n2, min_node_size, split_Rule, alpha, bucketnum, bucketMax, train_to_est_ratio);
-    
+
     if (!me->primary) {
 	/*
 	 * This is rather rare -- but I couldn't find a split worth doing
@@ -159,14 +159,14 @@ partition(int nodenum, pNode splitnode, double *sumrisk, int n1, int n2,
 	    *sumrisk = me->risk;
 	    return 0;
     }
-#ifdef DEBUG
-    print_tree(me, 4);
-#endif
+// #ifdef DEBUG
+//     print_tree(me, 4);
+// #endif
     if (ct.maxsur > 0)
 	surrogate(me, n1, n2);
     else
 	me->surrogate = (pSplit) NULL;
-    
+
     nodesplit(me, nodenum, n1, n2, &nleft, &nright);
 
     /*
@@ -233,11 +233,11 @@ partition(int nodenum, pNode splitnode, double *sumrisk, int n1, int n2,
 	    left_split = 0;
       }
     }
-    
+
     me->complexity = (me->risk - (left_risk + right_risk)) /
 	(left_split + right_split + 1);
 
-    
+
     if (me->complexity <= ct.alpha) {
 	/*
 	 * All was in vain!  This node doesn't split after all.

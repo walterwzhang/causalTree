@@ -6,12 +6,10 @@ library(devtools)
 #install.packages("rpart.plot", dependencies=TRUE, repos='http://cran.us.r-project.org')
 #install.packages("reshape2", dependencies=TRUE, repos='http://cran.us.r-project.org')
 #install.packages("plyr", dependencies=TRUE, repos='http://cran.us.r-project.org')
-
-# install_github("susanathey/causalTree", ref="modVR1",force=TRUE)
 library(rpart)
 library(rpart.plot)
 #install_github("susanathey/causalTree")
-# install_github("vikas84bf/causalTree",ref="optimalPolicy")
+install_github("vikas84bf/causalTree",ref="optimalPolicy")
 library(causalTree)
 library(reshape2)
 library(plyr)
@@ -20,7 +18,7 @@ library(plyr)
 # Generate data 
 # parameters for data generating
 p <- 20 # number of total covariates
-pt <- 2 #4 # number of covariates affecting treatment effects
+pt <- 4 # number of covariates affecting treatment effects
 py <- 4 # number of covariates affecting outcomes but not treatment effects
 asym <- .5 # whether treatment effects are distributed asymmetrically across treated and control
 n <- 1000 # total size of the dataset
@@ -42,8 +40,7 @@ tau <- 0
 for (iii in 1:pt) {
   tau <- tau + treatsize*pmax(X[,iii],array(0,n))*(2*X[,iii])
 }
-#subtract to have both +ve and -ve values for tau
-tau<-tau-median(tau)
+
 # generate average value of outcomes
 mu <- treatsize*rowSums(X[,1:pt])+levsize*rowSums(X[,(pt+1):(pt+py)])
 
@@ -75,8 +72,8 @@ for (ii in 1:p) {
 }
 
 
-name <- c( name,  "y", "w", "tau_true")
-# name <- c("x1","x2","y", "w", "tau_true")
+#name <- c( name,  "y", "w", "tau_true")
+name <- c("x1","x2","y", "w", "tau_true")
 
 tau_true <- (1-2*w)*(y_ - y)
 
@@ -84,42 +81,31 @@ ntr <- round(.333*n)
 nest <- round(.333*n)
 ntest <- n - ntr - nest
 
-###
-# simple X=binom, y=w*x
+#simple X=binom, y=w*x
 X=X[,1]
 #X=w
 # X <- rbinom(n, 1, propens)
 # X2 <- rbinom(n, 1, propens)
 X<-sample(2,n,replace=TRUE)
-X2<-sample(2,n,replace=TRUE)
-# w<-w*0+1
-y<-w*(X+X2)
+X2=sample(2,n,replace=TRUE)
+y=w*(X+X2)
 # X<-X+1
 #X<-factor(X)
-X2<-X2+2
+X2=X2+2
 X2<-factor(X2)
 
 #X=rbind(X,X2)
 #X=t(X)
 X=data.frame(X,X2)
-###
-
-
-# set global parameters
-minsize.temp = 25
-split.Bucket.temp = F
-bucketNum.temp = 5
-bucketMax.temp = 100
-
 
 #loop through X, if numel(unique(X))< no.buckets, convert that X dim to factor (above)
 #best to do it here at the top level
-# for (tmp1 in 1:ncol(X)){
-#   xtmp<-X[,tmp1]
-#   unxtmp<-unique(xtmp)
-#   if(length(unxtmp)<bucketMax.temp) #convert to factor
-#   X[,tmp1]<-factor(X[,tmp1])
-# }
+for (tmp1 in 1:ncol(X)){
+  xtmp<-X[,tmp1]
+  unxtmp<-unique(xtmp)
+  if(length(unxtmp)<bucketMax.temp) #convert to factor
+  X[,tmp1]<-factor(X[,tmp1])
+}
 
 #dataTrain <- data.frame(X[1:ntr], y[1:ntr], w[1:ntr], tau_true[1:ntr])
 #dataEst <- data.frame(X[(ntr+1):(ntr+nest)], y[(ntr+1):(ntr+nest)], w[(ntr+1):(ntr+nest)], tau_true[(ntr+1):(ntr+nest)])
@@ -129,9 +115,6 @@ dataTrain <- data.frame(X[1:ntr,], y[1:ntr], w[1:ntr], tau_true[1:ntr])
 dataEst <- data.frame(X[(ntr+1):(ntr+nest),], y[(ntr+1):(ntr+nest)], w[(ntr+1):(ntr+nest)], tau_true[(ntr+1):(ntr+nest)])
 dataTest <- data.frame(X[(ntr+nest+1):n,], y[(ntr+nest+1):n], w[(ntr+nest+1):n], tau_true[(ntr+nest+1):n])
 
-# preselect cross-validation groups to remove randomness in comparing methods
-xvalvec = sample(5, nrow(dataTrain), replace=TRUE)
-#xvalvec=5
 
 names(dataTrain)=name
 names(dataEst)=name
@@ -140,11 +123,19 @@ names(dataTest)=name
 tree_honest_prune_list <- vector(mode="list", length=4)
 tree_dishonest_prune_list <- vector(mode="list", length=4)
 
+# set global parameters
+minsize.temp = 25
+split.Bucket.temp = F
+bucketNum.temp = 5
+bucketMax.temp = 100
+# preselect cross-validation groups to remove randomness in comparing methods
+xvalvec = sample(5, nrow(dataTrain), replace=TRUE)
+#xvalvec=5
 
 
 # Do causal tree estimation
-split.Rule.temp = "policy" #tot,ct
-cv.option.temp = "CT" #tot,ct
+split.Rule.temp = "TOT" #tot,ct
+cv.option.temp = "TOT" #tot,ct
 split.Honest.temp = T
 cv.Honest.temp = T
 split.alpha.temp = .5
