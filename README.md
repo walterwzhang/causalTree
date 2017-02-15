@@ -1,8 +1,8 @@
 # causalTree Introduction
 
-The _causalTree_ function builds a regression model and returns an _rpart_ object, which is the object derived from _rpart_ package, implemneting many ideas in the CART (Classification and Regression Trees), written by Breiman, Friedman, Olshen and Stone. Like _rpart_, _causalTree_ builds a binary regression tree model in two stages, but focuses on estimating heterogeneous causal effect.
+The _causalTree_ function builds a regression model and returns an _rpart_ object, which is the object derived from _rpart_ package, implementing many ideas in the CART (Classification and Regression Trees), written by Breiman, Friedman, Olshen and Stone. Like _rpart_, _causalTree_ builds a binary regression tree model in two stages, but focuses on estimating heterogeneous causal effect.
 
-This repository was forked from [Professor Athey's Github](https://github.com/susanathey/causalTree). This fork of the repository is used for didatic purposes and will generally not be up to date with the latest version. 
+This repository was forked from [Professor Athey's Github](https://github.com/susanathey/causalTree). This fork of the repository is used for didactic purposes and will generally not be up to date with the latest version. 
 
 To install this package in R, run the following commands:
 
