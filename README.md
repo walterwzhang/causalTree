@@ -8,7 +8,7 @@ To install this package in R, run the following commands:
 ```R
 install.packages("devtools")
 library(devtools) 
-install_github("susanathey/causalTree")
+install_github("walterwzhang/causalTree")
 ```
 
 Example usage:
@@ -27,7 +27,7 @@ rpart.plot(opfit)
 
 ```
 
-For More details, please check out briefintro.pdf.
+For More details, please check out briefintro.pdf. 
 
 #### References
 Susan Athey, Guido Imbens. <b>Recursive Partitioning for Heterogeneous Causal Effects.</b> [<a href="http://arxiv.org/abs/1504.01132">link</a>]
