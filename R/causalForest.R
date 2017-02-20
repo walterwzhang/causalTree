@@ -30,7 +30,7 @@ causalForest <- function(formula, data, treatment,
                          
                          sample.size.total = floor(nrow(data) / 10), sample.size.train.frac = .5,
                          mtry = ceiling(ncol(data)/3), nodesize = 1, num.trees=nrow(data),
-                         cost=F, weights=F) {
+                         cost=F, weights=F, verbose = F) {
   
   # do not implement subset option of causalTree, that is inherited from rpart but have not implemented it here yet
 
@@ -43,11 +43,13 @@ causalForest <- function(formula, data, treatment,
 
   treatmentdf <- data.frame(treatment)
   
-  print("Building trees ...")
+  print("Building trees.")
   
   for (tree.index in 1:num.trees) {
-    
-    # print(paste("Tree", as.character(tree.index)))
+    if (verbose)
+    {
+      print(paste("Tree", as.character(tree.index)))
+    }
     
     full.idx <- sample.int(num.obs, sample.size, replace = FALSE)
     train.idx <- full.idx[1:train.size]
@@ -102,7 +104,7 @@ propensityForest <- function(formula, data, treatment,
   treatmentdf <- data.frame(treatment)
   outcomename = as.character(formula[2])
   
-  print("Building trees ...")
+  print("Building trees .")
   
   for (tree.index in 1:num.trees) {
     
