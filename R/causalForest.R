@@ -47,7 +47,7 @@ causalForest <- function(formula, data, treatment,
   
   for (tree.index in 1:num.trees) {
     
-    print(paste("Tree", as.character(tree.index)))
+    # print(paste("Tree", as.character(tree.index)))
     
     full.idx <- sample.int(num.obs, sample.size, replace = FALSE)
     train.idx <- full.idx[1:train.size]
@@ -106,7 +106,7 @@ propensityForest <- function(formula, data, treatment,
   
   for (tree.index in 1:num.trees) {
     
-    print(paste("Tree", as.character(tree.index)))
+    # print(paste("Tree", as.character(tree.index)))
     
     full.idx <- sample.int(num.obs, sample.size, replace = FALSE)
     train.idx <- full.idx[1:train.size]
