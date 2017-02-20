@@ -34,7 +34,7 @@ If the installation of the package with `install_github()` fails.
 
 - Make sure a prior version of _causalTree_ is not installed. 
 - Quit the R/RStudio Session
-- Check to see if the _causalTree_ library is still there and delete the folder if it is. (e.g. delete the folder C:\Users\<user>\Documents\R\win-library\3.3\causalTree on a windows computer)
+- Check to see if the _causalTree_ library is still there and delete the folder if it is. (e.g. delete the folder C:\Users\user_name\Documents\R\win-library\3.3\causalTree on a windows computer)
 - Open R/RStudio, load _devtools_, and try re-installing this package with `install_github()`
 
 #### References
