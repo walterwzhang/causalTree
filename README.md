@@ -17,12 +17,14 @@ Example usage:
 ```R
 library(causalTree)
 CF_fit <- causalForest(y~ x1 + x2 + x3 + x4, data = simulation.1, treatment = simulation.1$treatment,
-                   num.trees = 100)
+                   num.trees = 100, verbose = FALSE)
                   
 CF_predictions   <-   predict(CF_fit, simulation.2)
 
 summary(CF_predictions)
 ```
+
+For console output for each tree built set the parameter `verbose` to `TRUE` in `casualForest`.
 
 For more details, please check out briefintro.pdf. 
 
