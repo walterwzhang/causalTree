@@ -77,10 +77,6 @@ causalForest <- function(formula, data, treatment,
     hon_trees_list   <-   parallel::mclapply(1:num.trees, function(tree.index)
     {
         set.seed(seed + tree.index)
-        if (verbose)
-        {
-          print(paste("Tree", as.character(tree.index)))
-        }
         full.idx <- sample.int(num.obs, sample.size, replace = FALSE)
         train.idx <- full.idx[1:train.size]
         reestimation.idx <- full.idx[(train.size+1):sample.size]
