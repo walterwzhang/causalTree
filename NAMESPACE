@@ -7,6 +7,7 @@ importFrom(graphics, plot, text)
 importFrom(stats, model.frame, predict, residuals)
 importFrom(rpart, rpart)
 importFrom(data.table, copy)
+importFrom(parallel, mclapply)
 
 S3method(model.frame, causalTree)
 S3method(predict, causalForest)
